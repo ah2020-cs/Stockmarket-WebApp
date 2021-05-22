@@ -15,6 +15,7 @@ The web app is a AWS based serverless cloud application that allows users to ana
   -Users will be able to predict the performance of certain stocks using Sagemaker
   
   -AWS services used: S3, API Gateway, Cognito, Cloudfront, Sagemaker, Comprehend 
+  
     
 - Architecture Diagram
 
