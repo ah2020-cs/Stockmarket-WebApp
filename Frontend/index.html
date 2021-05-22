@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Home </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+
+
+<script type="text/javascript" src="js/lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="js/lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="js/lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="js/lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="js/lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="js/lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="js/lib/apiGatewayCore/utils.js"></script>
+<script type="text/javascript" src="js/apigClient.js"></script>
+
+<style>
+footer{
+  background-image: url("stockimage.jpg");
+}
+    
+</style>
+</head>
+
+<body>
+  
+<div class="topnav">
+  <a class="active" href="#home">Home</a>
+  <!-- <a href="#contact">Contact</a> -->
+  <div class="main">
+    <div>
+        <h2   >Welcome to our Trading Wesbite</h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="clock">
+    <br/>
+     
+        <script async defer id='2021316205417325' src='https://widgets.worldtimeserver.com/Public.ashx?rid=2021316205417325&theme=Analog&action=clock&wtsid=US-NY&hex=000000&city=New York'></script>
+        <script async defer id='2021316205522522' src='https://widgets.worldtimeserver.com/Public.ashx?rid=2021316205522522&theme=Analog&action=clock&wtsid=GB&hex=000000&city=London&size=small'></script>
+        <script async defer id='2021316205533882' src='https://widgets.worldtimeserver.com/Public.ashx?rid=2021316205533882&theme=Analog&action=clock&wtsid=CN&hex=000000&city=Beijing&size=small'></script>
+  
+  </div>
+  </div>
+
+
+<div class="container">
+  <div class="row">
+    <marquee width = "100%" class="labelFont labelColor" id="marketNews">News:</marquee>
+    
+    <div class="col-sm-6" id="accordion">
+        <fieldset>
+          <legend class="labelColor">Stocks:</legend>
+        <div>
+          <button type="button" class="btn" data-toggle="collapse" href="#ActiveDiv">Active</button>
+          <button type="button" class="btn" data-toggle="collapse" href="#GainerDiv" >Gainers</button>
+          <button type="button" class="btn" data-toggle="collapse" href="#LoserDiv"  >Losers</button>
+
+          <div class="accordion-group">
+          <table class="collapse" id="ActiveDiv"  data-parent="#accordion">
+            <tr>
+              <th class="labelFont labelColor">Symbol Name</th >
+              <th class="labelFont labelColor" >Exchange</th >
+              <th class="labelFont labelColor" >Exchange Name</th >
+              <th class="labelFont labelColor" >Type</th >
+            </tr>
+            
+          </table>
+          
+          
+          <table class="collapse" id="GainerDiv"  data-parent="#accordion">
+            <tr>
+              <th class="labelFont labelColor">Symbol Name</th >
+                <th class="labelFont labelColor" >Exchange</th >
+                <th class="labelFont labelColor" >Exchange Name</th >
+                <th class="labelFont labelColor" >Type</th >
+            </tr>
+           
+          </table>
+          
+          <table class="collapse"  id="LoserDiv"  data-parent="#accordion">
+            <tr>
+              <th class="labelFont labelColor">Symbol Name</th >
+                <th class="labelFont labelColor" >Exchange</th >
+                <th class="labelFont labelColor" >Exchange Name</th >
+                <th class="labelFont labelColor" >Type</th >
+            </tr>
+           
+          </table>
+        </div>
+          
+        </div>
+        </fieldset>
+<br/>
+
+        <div>
+          <div class="form-group">
+           
+             <select  class="stockinput" id="selectGrp" name="selectGrp">
+             <option name="" value=""></option>
+             <option name="AAPL" value="AAPL">Apple</option>
+             <option name="GOOG" value="GOOG">Google</option>
+             <option name="IBM" value="IBM">IBM</option>
+             </select>
+             <button class="btn btn-default" type="submit" onclick="getPrediction()"><i class="fa fa-search"></i></button>
+         </div>
+          <div class="input-group-btn">
+            <svg style="float: left;" id="chart1"width="500" height="390"></svg>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div>
+          <input type="text"  class="stockinput" placeholder="Stock Name" id="stockName" name="stockName"/><button class="btn btn-default" type="submit" onclick="searchSymbol()"><i class="fa fa-search"></i></button>
+          <span style="float: right;" class="labelFont labelColor" id="sentiment"></span>
+        </div>
+        <div>
+          <div class="input-group-btn">
+            <svg id="chart"width="850" height="390"></svg>
+          </div>
+        </div>
+       
+        <div style="margin-left:auto; margin-right:auto; width:960px; height: 500px; overflow-y: scroll;">
+          <fieldset>
+            <legend class="labelColor">Latest News:</legend>
+            <p id="companyNews" class="labelFont labelColor">
+  
+            </p>
+            </fieldset>
+        </div>
+
+        
+      </div>
+    
+      
+</div>
+
+
+
+</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+  <link href="c3/c3.css" rel="stylesheet">
+
+  <!-- Load d3.js and c3.js -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="c3/c3.min.js"></script>
+<script src="stock.js"></script>
+</html>
+
